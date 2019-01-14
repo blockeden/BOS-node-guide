@@ -8,7 +8,7 @@
 
 - 修改配置文件
 - 启动节点程序
-- 注册BOS账号、注册成为节点
+- 注册BOS账号、注册成为节点
 - 部署节点官网
 
 ## 硬件配置
@@ -226,7 +226,7 @@ docker logs -f --tail=20 容器名称
 
 ## docker方式使用客户端
 
-部署完节点之后,需要向区块链发送交易来注册成为节点,这个时候需要使用客户端.
+部署完节点之后,需要向区块链发送交易来注册成为节点,这个时候需要使用客户端.
 
 ### 启动 client
 
@@ -253,12 +253,12 @@ docker exec -it client_keosd_1 bash
 
 ### 创建本地钱包
 
-钱包只需要创建一次.
+钱包只需要创建一次.
 
 ```
 cleos wallet create --file /root/eosio-wallet/wallet-key
 ```
-该命令将会创建一个本地钱包,钱包密码会存在容器内部的/root/eosio-wallet/wallet-key文件中.
+该命令将会创建一个本地钱包,钱包密码会存在容器内部的/root/eosio-wallet/wallet-key文件中.
 
 ### 生成公私钥对
 ```
@@ -274,9 +274,9 @@ Public key: EOS6mmGZDVtujn3qsXNUVVX7C1WjkLr3iw3bbNyoGB6Q78DGYeEuU
 ```
 cleos wallet import
 ```
-然后在输入要导入的私钥,钱包中需要有操作账户相应的私钥才能发起交易.
+然后在输入要导入的私钥,钱包中需要有操作账户相应的私钥才能发起交易.
 
-### 注册账号
+### 注册账号
 
 最开始需要拥有账号的人为你注册账号,将账户名(12位,a-z或1-5)和公钥发给注册人.
 
@@ -289,7 +289,7 @@ cleos system newaccount
 
 执行命令
 ```
-cleos -u api节点 system regproducer 账户名 出块公钥 官网地址 时区
+cleos -u api节点 system regproducer 账户名 出块公钥 官网地址 时区
 ```
 
 参考:
@@ -304,19 +304,19 @@ cleos -u http://47.244.42.171:87 system regproducer blockedencom EOS8jdVGxpfdHpY
 ```
 cleos wallet unlock < /root/eosio-wallet/wallet-key
 ```
-命令中需要注意钱包密码的文件位置
+命令中需要注意钱包密码的文件位置
 
 转账:
 ```
-cleos -u api节点 transfer from to quantity memo
+cleos -u api节点 transfer from to quantity memo
 ```
 
 ## 多节点部署
 
 BOS节点程序有多种不同类型:
 - BP节点,负责出块,对安全性要求比较高.
-- P2P节点,负责广播交易.
-- API节点,负责接受客户端发起的交易.
+- P2P节点,负责广播交易.
+- API节点,负责接受客户端发起的交易.
   
 因为节点分工不同,为了更好服务用户,需要多节点部署方案.
 
@@ -326,5 +326,5 @@ https://github.com/slowmist/eos-bp-nodes-security-checklist
 
 大致的思路是:
 - 将BP节点程序放在局域网的内网,不对外暴露.
-- 多台API节点提供负载均衡的API服务器.
+- 多台API节点提供负载均衡的API服务器.
 - 多太P2P节点提供公网和VPN网络的数据传输.
