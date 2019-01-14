@@ -9,7 +9,7 @@
 BP节点配置建议：
 
 - 4GHz 4核 CPU
-- 公网IP 50M带宽
+- 公网IP 50M带宽
 - 32G Ram
 
 4GHz的cpu配置是对BP的基本要求，后续将会有cpu性能检测的工具来监督BP的硬件配置。
@@ -19,7 +19,7 @@ BP节点配置建议：
 
 ## 目录结构
 
-本项目作为配置参考，目录结构为：
+本项目作为配置参考，目录结构为：
 
 ```
 .
@@ -35,7 +35,7 @@ BP节点配置建议：
 
 ## 配置文件
 
-config.ini文件是节点配置文件，下面是一个配置文件参考：
+config.ini文件是节点配置文件，下面是一个配置文件参考：
 
 ```
 ## CHANGE THESE
@@ -43,7 +43,7 @@ p2p-server-address = p2p公网地址
 agent-name = "节点名"
 
 ## UNCOMMENT AND CHANGE THESE ONLY IF YOU WANT TO PRODUCE BLOCKS
-signature-provider = 出块公钥=KEY:出块私钥 
+signature-provider = 出块公钥=KEY:出块私钥 
 producer-name = 节点账户名
 
 ## MAYBE CHANGE THESE
@@ -111,14 +111,14 @@ signature-provider是出块账户注册时使用的公私钥。
 
 producer-name是出块账户的账户名
 
-配置文件最后是其他p2p节点地址的配置，具体内容根据其他节点提供的地址配置。
+配置文件最后是其他p2p节点地址的配置，具体内容根据其他节点提供的地址配置。
 
 其他配置项的具体作用，请参考 https://github.com/boscore
 
 
 ## docker部署方式
 
-本教程用docker方式启动，后续也会有本地编译版本的指南。
+本教程用docker方式启动，后续也会有本地编译版本的指南。
 
 ### 前置组建
 
@@ -127,7 +127,7 @@ producer-name是出块账户的账户名
 
 ### 拉取镜像
 
-拉取 bos 节点程序镜像：
+拉取 bos 节点程序镜像：
 
 ```
 docker pull boscore/bos
@@ -215,7 +215,7 @@ docker-compose -f docker-compose.yaml up -d
 docker ps -a
 ```
 
-查看docker日志
+查看docker日志
 ```
 docker logs -f --tail=20 容器名称
 ```
