@@ -10,7 +10,7 @@ BP节点配置建议：
 
 - 4GHz 4核 CPU
 - 公网IP 50M带宽
-- 32G Ram
+- 32G 内存
 
 4GHz的cpu配置是对BP的基本要求，后续将会有cpu性能检测的工具来监督BP的硬件配置。
 
@@ -27,8 +27,8 @@ BP节点配置建议：
 │   ├── config.ini      (bos配置文件,需要修改)
 │   └── genesis.json    (需要替换,每个链有一个相应的文件,测试链和主链不同)
 ├── data                (区块数据,不能手动修改)
-├── docker-compose-init.yaml    (首次启动docker-compose配置文件)
-└── docker-compose.yaml         (正常启动docker-compose配置文件)
+├── docker-compose-init.yaml    (首次启动docker-compose配置文件,需要修改)
+└── docker-compose.yaml         (正常启动docker-compose配置文件,需要修改)
 ```
 
 这是一个BOS配置和数据文件基本的示例。
@@ -120,7 +120,7 @@ producer-name是出块账户的账户名
 
 本教程用docker方式启动，后续也会有本地编译版本的指南。
 
-### 前置组建
+### 前置组件
 
 - docker
 - docker-compose
@@ -138,7 +138,7 @@ docker pull boscore/bos
 首次启动docker-compose配置文件 : docker-compose-init.yaml
 
 ```
-version: "3"
+version: "2"
 
 services:
   nodeosd:
@@ -148,8 +148,6 @@ services:
     ports:
       - 8890:8888
       - 9878:9876
-    expose:
-      - "8888"
     volumes:
       - 项目目录/config:/etc/nodeos
       - 项目目录/data:/data
@@ -158,7 +156,7 @@ services:
 后续正常启动docker-compose配置文件 : docker-compose.yaml
 
 ```
-version: "3"
+version: "2"
 
 services:
   nodeosd:
@@ -168,8 +166,6 @@ services:
     ports:
       - 8890:8888
       - 9878:9876
-    expose:
-      - "8888"
     volumes:
       - 项目目录/config:/etc/nodeos
       - 项目目录/data:/data
