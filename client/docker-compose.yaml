@@ -1,0 +1,9 @@
+version: "2"
+
+services:
+  keosd:
+    image: boscore/bos:latest
+    command: /opt/eosio/bin/keosd
+    hostname: keosd
+    volumes:
+      - ~/bos-wallet:/root/eosio-wallet

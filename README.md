@@ -4,6 +4,13 @@
 
 本文旨在给希望运行BOS节点的开发者提供部署指南和架构建议。
 
+启动一个BOS节点大致的流程为:
+
+- 修改配置文件
+- 启动节点程序
+- 注册BOS账号、注册成为节点
+- 部署节点官网
+
 ## 硬件配置
 
 BP节点配置建议：
@@ -116,7 +123,7 @@ producer-name是出块账户的账户名
 其他配置项的具体作用，请参考 https://github.com/boscore
 
 
-## docker部署方式
+## docker方式部署节点
 
 本教程用docker方式启动，后续也会有本地编译版本的指南。
 
@@ -216,3 +223,108 @@ docker ps -a
 docker logs -f --tail=20 容器名称
 ```
 
+
+## docker方式使用客户端
+
+部署完节点之后,需要向区块链发送交易来注册成为节点,这个时候需要使用客户端.
+
+### 启动 client
+
+client 可以部署在任何地方,可以是云端服务器,也可以是本地笔记本,前置条件是需要安装:
+
+- docker
+- docker-compose
+  
+参考本项目client文件目录下的内容, 在client目录下执行一下命令来启动客户端容器.
+
+```
+docker-compose up -d
+```
+
+在客户端容器启动的情况下执行以下命令进入容器内部:
+```
+docker exec -it client_keosd_1 bash
+```
+这里的**client_keosd_1**需要换成实际的docker容器名称.
+
+进入容器后就可以使用cleos命令行工具和keosd钱包工具了.
+
+**该小节所有后续都在docker容器内部执行.**
+
+### 创建本地钱包
+
+钱包只需要创建一次.
+
+```
+cleos wallet create --file /root/eosio-wallet/wallet-key
+```
+该命令将会创建一个本地钱包,钱包密码会存在容器内部的/root/eosio-wallet/wallet-key文件中.
+
+### 生成公私钥对
+```
+cleos create key --to-console
+```
+该命令会生成一个公私钥对,类似:
+```
+Private key: 5KKZJiGGMcW2nEjqTrHfMioKFJP6conCw8c42kQGE33BsLs7dCz
+Public key: EOS6mmGZDVtujn3qsXNUVVX7C1WjkLr3iw3bbNyoGB6Q78DGYeEuU
+```
+
+### 导入私钥到钱包
+```
+cleos wallet import
+```
+然后在输入要导入的私钥,钱包中需要有操作账户相应的私钥才能发起交易.
+
+### 注册账号
+
+最开始需要拥有账号的人为你注册账号,将账户名(12位,a-z或1-5)和公钥发给注册人.
+
+如果已经拥有账号,可以使用命令创建账号
+```
+cleos system newaccount 
+```
+
+### 注册成为候选节点
+
+执行命令
+```
+cleos -u api节点 system regproducer 账户名 出块公钥 官网地址 时区
+```
+
+参考:
+```
+cleos -u http://47.244.42.171:87 system regproducer blockedencom EOS8jdVGxpfdHpY94FZZbcn3pbTZ45DkD7CLkQFxi8kpuRiF1YDdu http://blockeden.com 1
+```
+时区字段为:-11～12, 允许小数.
+
+### 其他操作
+
+解锁钱包:
+```
+cleos wallet unlock < /root/eosio-wallet/wallet-key
+```
+命令中需要注意钱包密码的文件位置
+
+转账:
+```
+cleos -u api节点 transfer from to quantity memo
+```
+
+## 多节点部署
+
+BOS节点程序有多种不同类型:
+- BP节点,负责出块,对安全性要求比较高.
+- P2P节点,负责广播交易.
+- API节点,负责接受客户端发起的交易.
+  
+因为节点分工不同,为了更好服务用户,需要多节点部署方案.
+
+可以参考慢雾提供的安全部署指南:
+
+https://github.com/slowmist/eos-bp-nodes-security-checklist
+
+大致的思路是:
+- 将BP节点程序放在局域网的内网,不对外暴露.
+- 多台API节点提供负载均衡的API服务器.
+- 多太P2P节点提供公网和VPN网络的数据传输.
