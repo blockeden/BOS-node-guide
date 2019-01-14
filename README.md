@@ -1,8 +1,10 @@
 # BOS 节点部署指南
 
-[View in English](README_EN.md)
+<!-- [View in English](README_EN.md) -->
 
 本文旨在给希望运行BOS节点的开发者提供部署指南和架构建议。
+
+如果你是EOS老手, 请直接查看:[BOS与EOS差异](BOS-EOS.md)
 
 启动一个BOS节点大致的流程为:
 
@@ -59,18 +61,21 @@ p2p-listen-endpoint = 0.0.0.0:9876
 
 ## USUALLY DONT CHANGE THESE
 blocks-dir = "blocks"
-abi-serializer-max-time-ms = 2000
+abi-serializer-max-time-ms = 3000
 wasm-runtime = wabt
 chain-state-db-size-mb = 65535
 reversible-blocks-db-size-mb = 1024
 contracts-console = false
 https-client-validate-peers = 1
-p2p-max-nodes-per-host = 1
+p2p-max-nodes-per-host = 5
 allowed-connection = any
 max-clients = 25
 network-version-match = 0 
 sync-fetch-span = 500
+connection-cleanup-period = 30
+max-implicit-request = 1500
 http-validate-host = false
+p2p-discoverable = true
 ## eosio::producer_plugin
 enable-stale-production = true
 pause-on-startup = false
