@@ -1,3 +1,23 @@
+- [BOS与EOS差异](#bos%E4%B8%8Eeos%E5%B7%AE%E5%BC%82)
+  - [CPU主频要求](#cpu%E4%B8%BB%E9%A2%91%E8%A6%81%E6%B1%82)
+  - [P2P自发现功能](#p2p%E8%87%AA%E5%8F%91%E7%8E%B0%E5%8A%9F%E8%83%BD)
+  - [按照时区顺序进行出块](#%E6%8C%89%E7%85%A7%E6%97%B6%E5%8C%BA%E9%A1%BA%E5%BA%8F%E8%BF%9B%E8%A1%8C%E5%87%BA%E5%9D%97)
+  - [节点信息提供](#%E8%8A%82%E7%82%B9%E4%BF%A1%E6%81%AF%E6%8F%90%E4%BE%9B)
+  - [Notify Plugin](#notify-plugin)
+  - [其他改进(配置无关)](#%E5%85%B6%E4%BB%96%E6%94%B9%E8%BF%9B%E9%85%8D%E7%BD%AE%E6%97%A0%E5%85%B3)
+    - [安全随机数](#%E5%AE%89%E5%85%A8%E9%9A%8F%E6%9C%BA%E6%95%B0)
+    - [低保](#%E4%BD%8E%E4%BF%9D)
+    - [其他](#%E5%85%B6%E4%BB%96)
+- [The Differences between BOS and EOS](#the-differences-between-bos-and-eos)
+  - [CPU Frequency Requirement](#cpu-frequency-requirement)
+  - [P2P Self-discovery Function](#p2p-self-discovery-function)
+  - [Producing blocks in timezone order](#producing-blocks-in-timezone-order)
+  - [Information provided by:](#information-provided-by)
+  - [Notify Plugin](#notify-plugin-1)
+  - [Other Improvements (not related to configurations)](#other-improvements-not-related-to-configurations)
+    - [Safer Random Number Scheme](#safer-random-number-scheme)
+    - [Guaranteed Minimum Provision](#guaranteed-minimum-provision)
+    - [Others](#others)
 # BOS与EOS差异
 
 作为一个对EOS比较了解的开发者, 简单介绍一下部署BOS和EOS节点的差异.
