@@ -63,3 +63,57 @@ BOS上为用户提供资源的低保, 每个用户每天能够获得一定时间
 
 
 
+# The Differences between BOS and EOS
+ 
+As a developer who knows quite well about EOS, let's take a brief look at the differences between deploying BOS and EOS nodes.
+
+## CPU Frequency Requirement
+BOS requires the main frequency for producing blocks reach to 4GHz.
+
+On EOS, the CPU frequency of the BPs greatly affects the price of CPU and the TPS. I think the BOS can further increase TPS while reducing CPU price.
+
+## P2P Self-discovery Function
+On EOS, nodes can only transfer data to P2P nodes in the configuration file. The disadvantages are:
+- Need to maintain a frequent list of nodes
+- Well-known nodes have more network pressure
+- Newly participated nodes are difficult to provide data services
+
+BOS added the P2P self-discovery function and can share P2P lists with other nodes, which can effectively improve the robustness of the entire network.
+
+Controlling self-discovery through the following configurations in the config.ini file:
+```
+p2p-discoverable = true
+```
+In order to avoid connecting untrusted nodes, it is recommended that BPs not to turn on self-discovery function.
+
+## Producing blocks in timezone order
+The top 21 BPs of EOS are sorted by the letter of their account names, and what is the problem? It is possible that the geographical location of the two BPs is very far apart, which will lead to many forks due to the network latency.
+
+BOS has modified the order of the block-producing and sorts them according to the timezone. This can effectively reduce the network latency.
+
+
+When registering the BP account, the 4th parameter is the timezone:
+```
+cleos system regproducer BPACCOUNT XXXXX https://xxxx.com 11
+```
+
+## Information provided by: 
+The node details on EOS: node official website/bp.json
+The node details on BOS: node official website/bos.json
+
+## Notify Plugin
+BOS has a built-in Notify Plugin that can be used in a similar way to the History Plugin, enabling low-cost, fast access to account monitoring, etc. 
+
+
+## Other Improvements (not related to configurations)
+
+### Safer Random Number Scheme
+At present, there are many hacked events in DAPPs on EOS. One of the biggest reasons is that the algorithm for generating random numbers by DAPP is inappropriate. BOS comes with random number API, which can effectively avoid such security events.
+
+### Guaranteed Minimum Provision
+The CPU resource model on EOS often leads us to a very embarrassing situation. When the price of CPU is high, the user cannot initiate a transaction because of the insufficient CPU mortgage, even to mortgage for one's own account and he needs to ask others to help.
+
+BOS provides users with a minimum guaranteed resources. Each user can get free resources for a certain period every day, which can effectively solve the problem of insufficient resources and improve the user experience.
+
+### Others
+More optimations, please view [BOS whitepaper](https://github.com/boscore/Documentation/blob/master/BOSCoreTechnicalWhitePaper.md)
